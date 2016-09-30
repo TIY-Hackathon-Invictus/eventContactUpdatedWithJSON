@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Brice on 9/29/16.
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 
 @RestController
 public class JSONController {
+
+    Database myDB = new Database();
 
     @Autowired
     EventRepository events;
@@ -29,42 +33,44 @@ public class JSONController {
     CheckedInRepository checkedInRepos;
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public User login(HttpSession session, String userName, String password) throws Exception {
+    public List<User> login(String firstName, String password) throws Exception {
 
-        User user = users.findFirstByName(userName);
+        List<User> myUsers = users.findFirstByFirstName(firstName);
 
-        if (user == null) {
+        myDB.login(myUsers.get(0));
+
+        if (myUsers == null) {
             throw new Exception("No user exists; create a new user!");
         }
 //        else if (!password.equals(user.getPassword())) {
 //
 //        }
 
-        session.setAttribute("user", user);
+//        session.setAttribute("user", user);
 
 
-        return user;
+        return myUsers;
     }
 
-    @RequestMapping(path = "/register", method = RequestMethod.POST)
+//    @RequestMapping(path = "/register", method = RequestMethod.POST)
 
-    public User register(HttpSession session,String email, String firstName, String lastName, String password) {
+//    public User register( String firstName, String lastName, String email, String password) {
+//        myDB.
 
-
-        User user = users.findFirstByName(firstName);
-        if (user == null) {
-            user = new User(firstName, lastName, password, email);
-            users.save(user);
-        }
+//        User user = users.findFirstByFirstName(firstName);
+//        if (user == null) {
+//            user = new User(firstName, lastName, email, password);
+//            users.save(user);
+//        }
 //        else if (!password.equals(user.getPassword())) {
 //            throw new Exception("Incorrect password");
 //        }
 
-        session.setAttribute("user", user);
+   //     session.setAttribute("user", user);
 
 
-        return user;
-    }
+//        return user;
+//    }
 
 
 

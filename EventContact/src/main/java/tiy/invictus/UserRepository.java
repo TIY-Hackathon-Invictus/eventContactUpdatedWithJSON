@@ -1,6 +1,9 @@
 package tiy.invictus;
 
+
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 /**
  * Created by Brice on 9/29/16.
@@ -8,5 +11,5 @@ import org.springframework.data.repository.CrudRepository;
 
 
 public interface UserRepository extends CrudRepository<User, Integer> {
-    User findFirstByName(String firstName);
+    List<User> findFirstByFirstName(String firstName);
 }
