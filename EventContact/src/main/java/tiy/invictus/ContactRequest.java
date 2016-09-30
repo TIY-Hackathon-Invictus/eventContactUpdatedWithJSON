@@ -14,19 +14,19 @@ public class ContactRequest {
     @GeneratedValue
     int id;
 
-    @Column
-    User contactor;
+    @Column (nullable = false)
+    int contactorid;
 
-    @Column
-    User contactee;
+    @Column (nullable = false)
+    int contacteeid;
 
     public ContactRequest() {
     }
 
-    public ContactRequest(int id, User contactor, User contactee) {
+    public ContactRequest(int id, int contactorid, int contacteeid) {
         this.id = id;
-        this.contactor = contactor;
-        this.contactee = contactee;
+        this.contactorid = contactorid;
+        this.contacteeid = contacteeid;
     }
 
     public int getId() {
@@ -37,19 +37,19 @@ public class ContactRequest {
         this.id = id;
     }
 
-    public User getContactor() {
-        return contactor;
+    public int getContactor() {
+        return contactorid;
     }
 
-    public void setContactor(User contactor) {
-        this.contactor = contactor;
+    public void setContactor(int contactorid) {
+        this.contactorid = contactorid;
     }
 
-    public User getContactee() {
-        return contactee;
+    public int getContactee() {
+        return contacteeid;
     }
 
-    public void setContactee(User contactee) {
-        this.contactee = contactee;
+    public void setContactee(int contacteeid) {
+        this.contacteeid = contacteeid;
     }
 }
