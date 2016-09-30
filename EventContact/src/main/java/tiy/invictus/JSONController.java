@@ -25,6 +25,9 @@ public class JSONController {
     @Autowired
     ContactRequestRepository contacts;
 
+    @Autowired
+    CheckedInRepository checkedInRepos;
+
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public User login(HttpSession session, String userName, String password) throws Exception {
 
@@ -36,13 +39,17 @@ public class JSONController {
 //        else if (!password.equals(user.getPassword())) {
 //
 //        }
+
         session.setAttribute("user", user);
+
 
         return user;
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
+
     public User register(HttpSession session,String email, String firstName, String lastName, String password) {
+
 
         User user = users.findFirstByName(firstName);
         if (user == null) {
@@ -52,12 +59,25 @@ public class JSONController {
 //        else if (!password.equals(user.getPassword())) {
 //            throw new Exception("Incorrect password");
 //        }
+
         session.setAttribute("user", user);
 
 
         return user;
     }
 
+
+
+    @RequestMapping(path = "/home", method = RequestMethod.POST)
+    public ArrayList<Event> home(int userID) {
+        ArrayList<Event> eventList = new ArrayList<Event>();
+        Iterable<Event> allEvents = events.findAll();
+        for (Event event : allEvents) {
+            eventList.add(event);
+        }
+
+        return eventList;
+    }
 
 
     @RequestMapping(path = "/events", method = RequestMethod.POST)
@@ -80,15 +100,12 @@ public class JSONController {
 
     @RequestMapping(path = "/eventInfo", method = RequestMethod.POST)
     public Event eventInfo(int eventID) {
-
-        Event event = events.findOne(Integer.valueOf(eventID));
-
+        Event event = events.findOne(eventID);
         return event;
     }
 
     @RequestMapping(path = "/addEvent", method = RequestMethod.POST)
-    public ArrayList<Event> addEvent(HttpSession session, @RequestBody Event event) throws Exception {
-        User user = (User)session.getAttribute("user");
+    public ArrayList<Event> addEvent(User user, Event event) throws Exception {
 
         if (user == null) {
             throw new Exception("Unable to add event without an active user in the session");
@@ -119,10 +136,11 @@ public class JSONController {
 
     @RequestMapping(path = "/contactInfo", method = RequestMethod.POST)
     public User contactInfo(int userID) {
-        User user = users.findOne(Integer.valueOf(userID));
+        User user = users.findOne(userID);
 
         return user;
     }
+
     @RequestMapping(path = "/requests", method = RequestMethod.POST)
     public ArrayList<ContactRequest> requests() {
         ArrayList<ContactRequest> contactRequestsList = new ArrayList<ContactRequest>();
