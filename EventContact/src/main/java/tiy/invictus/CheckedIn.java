@@ -21,4 +21,11 @@ public class CheckedIn {
 
     @Column
     Event event;
+
+    public CheckedIn(int id, User user, Event event) {
+        this.id = id;
+        this.user = user;
+        this.event = event;
+    }
+
 }

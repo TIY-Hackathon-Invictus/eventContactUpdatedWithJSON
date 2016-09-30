@@ -25,6 +25,9 @@ public class JSONController {
     @Autowired
     ContactRequestRepository contacts;
 
+    @Autowired
+    CheckedInRepository checkedInRepos;
+
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public User login(String userName, String password) throws Exception {
 
@@ -124,6 +127,7 @@ public class JSONController {
 
         return user;
     }
+
     @RequestMapping(path = "/requests", method = RequestMethod.POST)
     public ArrayList<ContactRequest> requests() {
         ArrayList<ContactRequest> contactRequestsList = new ArrayList<ContactRequest>();

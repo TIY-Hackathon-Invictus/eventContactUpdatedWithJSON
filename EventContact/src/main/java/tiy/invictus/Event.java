@@ -27,9 +27,6 @@ public class Event {
     @ManyToOne
     User adminUserID;
 
-    @ManyToMany
-    User attendees;
-
     @Column
     String dateAndTime;
 
@@ -43,7 +40,6 @@ public class Event {
         this.address = address;
         this.description = description;
         this.adminUserID = adminUserID;
-        this.attendees = attendees;
         this.dateAndTime = dateAndTime;
     }
 
@@ -85,14 +81,6 @@ public class Event {
 
     public void setAdminUserID(User adminUserID) {
         this.adminUserID = adminUserID;
-    }
-
-    public User getAttendees() {
-        return attendees;
-    }
-
-    public void setAttendees(User attendees) {
-        this.attendees = attendees;
     }
 
     public String getDateAndTime() {
