@@ -37,10 +37,12 @@ public class JSONController {
 //
 //        }
         session.setAttribute("user", user);
+
+        return user;
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public String register(HttpSession session,String email, String firstName, String lastName, String password) {
+    public User register(HttpSession session,String email, String firstName, String lastName, String password) {
 
         User user = users.findFirstByName(firstName);
         if (user == null) {
@@ -53,13 +55,10 @@ public class JSONController {
         session.setAttribute("user", user);
 
 
-        return user.getEmail();
+        return user;
     }
 
-    @RequestMapping(path = "/home", method = RequestMethod.POST)
-    public ArrayList<Event> home(int userID) {
-        
-    }
+
 
     @RequestMapping(path = "/events", method = RequestMethod.POST)
     public ArrayList<Event> getAllEvents() {
