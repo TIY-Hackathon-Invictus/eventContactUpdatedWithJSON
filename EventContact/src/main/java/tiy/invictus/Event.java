@@ -38,8 +38,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(int id, String title, String address, String description, User adminUserID, User attendees, String dateAndTime) {
-        this.id = id;
+    public Event(String title, String address, String description, User adminUserID, User attendees, String dateAndTime) {
         this.title = title;
         this.address = address;
         this.description = description;

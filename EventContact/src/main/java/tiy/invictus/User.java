@@ -26,6 +26,9 @@ public class User {
     @Column(unique = true, nullable = false)
     String email;
 
+    @Column
+    boolean isAdmin;
+
 
     public User(String firstName, String lastName, String password, String email) {
 
@@ -35,7 +38,23 @@ public class User {
         this.email = email;
     }
 
+    public User(String firstName, String lastName, String password, String email, boolean isAdmin) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.email = email;
+        this.isAdmin = isAdmin;
+    }
+
     public User() {
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public int getId() {
