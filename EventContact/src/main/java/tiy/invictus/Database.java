@@ -22,15 +22,21 @@ public class Database {
     @Autowired
     CheckedInRepository checkedInRepos;
 
+    public Database(UserRepository users, EventRepository events) {
+        this.events = events;
+        this.users = users;
+    }
+
     public User login(User user) {
 
-        Iterable<User> loggedIn;
+//        Iterable<User> loggedIn;
         User myUser = new User();
-        loggedIn = users.findFirstByFirstName(user.getFirstName());
-        for (User thisUser : loggedIn) {
-            System.out.println(thisUser.getFirstName());
-            myUser.setFirstName(thisUser.getFirstName());
-        }
+        myUser = users.findFirstByEmail(user.getEmail());
+        System.out.println("find first by email");
+//        for (User thisUser : loggedIn) {
+//            System.out.println(thisUser.getFirstName());
+//            myUser.setFirstName(thisUser.getFirstName());
+//        }
 
         return myUser;
     }

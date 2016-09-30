@@ -18,8 +18,6 @@ import java.util.List;
 @RestController
 public class JSONController {
 
-    Database myDB = new Database();
-
     @Autowired
     EventRepository events;
 
@@ -32,14 +30,19 @@ public class JSONController {
     @Autowired
     CheckedInRepository checkedInRepos;
 
+
+
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public List<User> login(String firstName, String password) throws Exception {
+    public User login(String email, String password) throws Exception {
+        Database myDB = new Database(users, events);
+        System.out.println(users);
+        System.out.println(email);
+        User myUser = users.findFirstByEmail(email);
+        System.out.println("works2");
 
-        List<User> myUsers = users.findFirstByFirstName(firstName);
+//        myDB.login(myUser);
 
-        myDB.login(myUsers.get(0));
-
-        if (myUsers == null) {
+        if (myUser == null) {
             throw new Exception("No user exists; create a new user!");
         }
 //        else if (!password.equals(user.getPassword())) {
@@ -49,28 +52,24 @@ public class JSONController {
 //        session.setAttribute("user", user);
 
 
-        return myUsers;
+        return myUser;
     }
 
-//    @RequestMapping(path = "/register", method = RequestMethod.POST)
+    @RequestMapping(path = "/register", method = RequestMethod.POST)
 
-//    public User register( String firstName, String lastName, String email, String password) {
-//        myDB.
-
-//        User user = users.findFirstByFirstName(firstName);
-//        if (user == null) {
-//            user = new User(firstName, lastName, email, password);
-//            users.save(user);
-//        }
-//        else if (!password.equals(user.getPassword())) {
-//            throw new Exception("Incorrect password");
-//        }
-
-   //     session.setAttribute("user", user);
+    public User register( String firstName, String lastName, String email, String password) throws Exception {
 
 
-//        return user;
-//    }
+        User user = users.findFirstByEmail(email);
+        if (user == null) {
+            user = new User(firstName, lastName, email, password);
+            users.save(user);
+        }
+        else if (!password.equals(user.getPassword())) {
+            throw new Exception("Incorrect password");
+        }
+        return user;
+    }
 
 
 
