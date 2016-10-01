@@ -56,10 +56,7 @@ public class JSONController {
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-
-    public User register( String firstName, String lastName, String email, String password) throws Exception {
-
-
+    public User register(String firstName, String lastName, String email, String password) throws Exception {
         User user = users.findFirstByEmail(email);
         if (user == null) {
             user = new User(firstName, lastName, email, password);
