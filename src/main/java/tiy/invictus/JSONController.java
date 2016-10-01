@@ -38,18 +38,14 @@ public class JSONController {
 
     public User login(@RequestBody ReqLoginRequest lr) throws Exception {
         User myUser = users.findFirstByEmail(lr.getEmail());
-
-
         System.out.println("This is the email and password "+myUser.email + " " + myUser.password);
-
-
-
         if (myUser == null) {
             throw new Exception("No user exists; create a new user!");
         }
-//        else if (!password.equals(user.getPassword())) {
-//
-//        }
+//      else if (!lr.getPassword().equals(user.getPassword())) {
+//          throw new Exception("Password is incorrect");
+//      }
+
         return myUser;
     }
 

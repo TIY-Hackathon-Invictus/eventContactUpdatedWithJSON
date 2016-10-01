@@ -1,7 +1,7 @@
 angular.module('TIYAngularApp', [])
    .controller('SampleController', function($scope, $http) {
 
-    console.log("hi");
+    console.log("Initial start");
         $scope.login = function(email, password) {
             console.log("About to go get me some data!");
             $http.post("/login?email=" + email + "&password=" + password)
@@ -36,5 +36,21 @@ angular.module('TIYAngularApp', [])
                                 console.log("Unable to toggle todo-");
                            });
          };
+
+         $scope.allEvents = function() {
+                      console.log("About to add the show events "); // + JSON.stringify($scope.newGame));
+
+                         $http.post("/events")
+                           .then(
+                              function successCallback(response) {
+                                  console.log(response.data);
+                                  console.log("Adding data to scope");
+                                  $scope.events = response.data;
+                              },
+                              function errorCallback(response) {
+                                  console.log("Unable to get data");
+                              });
+                 };
+
     });
 
