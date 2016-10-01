@@ -39,6 +39,7 @@ public class JSONController {
         System.out.println(email);
         User myUser = users.findFirstByEmail(email);
         System.out.println("works2");
+        System.out.println(email + " " + password);
 
 //        myDB.login(myUser);
 
