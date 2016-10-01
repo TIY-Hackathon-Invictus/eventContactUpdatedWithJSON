@@ -6,11 +6,11 @@ package tiy.invictus;
 public class ReqAddEvent {
 
     public int myUserID;
-    public int myEventID;
+    public Event myEvent;
 
-    public ReqAddEvent(int myUserID, int myEventID) {
+    public ReqAddEvent(int myUserID, Event myEvent) {
         this.myUserID = myUserID;
-        this.myEventID = myEventID;
+        this.myEvent = myEvent;
     }
 
     public int getMyUserID() {
@@ -21,11 +21,11 @@ public class ReqAddEvent {
         this.myUserID = myUserID;
     }
 
-    public int getMyEventID() {
-        return myEventID;
+    public Event getMyEventID() {
+        return myEvent;
     }
 
     public void setMyEventID(int myEventID) {
-        this.myEventID = myEventID;
+        this.myEvent = myEvent;
     }
 }
