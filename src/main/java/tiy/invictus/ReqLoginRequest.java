@@ -3,17 +3,17 @@ package tiy.invictus;
 /**
  * Created by SC on 10/1/2016.
  */
-public class LoginRequest {
+public class ReqLoginRequest {
 
     public String email;
     public String password;
 
-    public LoginRequest()
+    public ReqLoginRequest()
     {
 
     }
 
-    public LoginRequest(String email, String password) {
+    public ReqLoginRequest(String email, String password) {
         this.email = email;
         this.password = password;
     }

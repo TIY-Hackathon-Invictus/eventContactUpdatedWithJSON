@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Brice on 9/29/16.
@@ -39,7 +36,7 @@ public class JSONController {
 //        return myUser;
 
 
-    public User login(@RequestBody LoginRequest lr) throws Exception {
+    public User login(@RequestBody ReqLoginRequest lr) throws Exception {
         User myUser = users.findFirstByEmail(lr.getEmail());
 
 
@@ -68,19 +65,16 @@ public class JSONController {
         }
         return user;
     }
-
-
-
-    @RequestMapping(path = "/home", method = RequestMethod.POST)
-    public ArrayList<Event> home(int userID) {
-        ArrayList<Event> eventList = new ArrayList<Event>();
-        Iterable<Event> allEvents = events.findAll();
-        for (Event event : allEvents) {
-            eventList.add(event);
-        }
-
-        return eventList;
-    }
+//    @RequestMapping(path = "/home", method = RequestMethod.POST)
+//    public ArrayList<Event> home(int userID) {
+//        ArrayList<Event> eventList = new ArrayList<Event>();
+//        Iterable<Event> allEvents = events.findAll();
+//        for (Event event : allEvents) {
+//            eventList.add(event);
+//        }
+//
+//        return eventList;
+//    }
 
 
     @RequestMapping(path = "/events", method = RequestMethod.POST)
@@ -102,20 +96,20 @@ public class JSONController {
     }
 
     @RequestMapping(path = "/eventInfo", method = RequestMethod.POST)
-    public Event eventInfo(int eventID) {
-        Event event = events.findOne(eventID);
+    public Event eventInfo(@RequestBody ReqEventInfo ei) {
+        Event event = events.findOne(ei.getEvent_ID());
         return event;
     }
 
     @RequestMapping(path = "/addEvent", method = RequestMethod.POST)
-    public ArrayList<Event> addEvent(User user, Event event) throws Exception {
-
-        if (user == null) {
+    public ArrayList<Event> addEvent(@RequestBody ReqAddEvent rae) throws Exception {
+        User newUser = users.findOne(rae.getMyUserID());
+        if (newUser == null) {
             throw new Exception("Unable to add event without an active user in the session");
         }
-        event.adminUserID = user;
-
-        events.save(event);
+        Event newEvent = new Event();
+        newEvent.setAdminUserID(newUser);
+        events.save(newEvent);
 
         return getAllEvents();
     }
