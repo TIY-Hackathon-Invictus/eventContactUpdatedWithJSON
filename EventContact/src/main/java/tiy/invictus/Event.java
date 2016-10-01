@@ -13,21 +13,21 @@ public class Event {
 
     @Id
     @GeneratedValue
-    int id;
+    int eventid;
 
-    @Column
+    @Column (nullable = false)
     String title;
 
-    @Column
+    @Column (nullable = false)
     String address;
 
-    @Column
+    @Column (nullable = false)
     String description;
 
     @ManyToOne
     User adminUserID;
 
-    @Column
+    @Column (nullable = false)
     String dateAndTime;
 
 
@@ -43,12 +43,12 @@ public class Event {
         this.dateAndTime = dateAndTime;
     }
 
-    public int getId() {
-        return id;
+    public int getEventId() {
+        return eventid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setEventId(int id) {
+        this.eventid = id;
     }
 
     public String getTitle() {

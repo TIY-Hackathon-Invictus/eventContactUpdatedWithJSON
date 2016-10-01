@@ -1,9 +1,11 @@
 angular.module('TIYAngularApp', [])
    .controller('SampleController', function($scope, $http) {
 
-        $scope.login = function() {
+    console.log("hi");
+        $scope.login = function(email, password) {
             console.log("About to go get me some data!");
-            $http.post("/login", $scope.email, $scope.password)
+            $http.post("/login?email=" + email + "&password=" + password)
+//            , $scope.email, $scope.password)
                 .then(
                     function successCallback(response) {
                         console.log(response.data);
@@ -15,10 +17,11 @@ angular.module('TIYAngularApp', [])
                     });
         };
 
-        $scope.register = function() {
-                     console.log("About to register);
+        $scope.register = function(firstName, lastName, email2, password2) {
+                     console.log("About to register");
 
-                     $http.post("/register", $scope.email, $scope.firstName, $scope.lastName, $scope.password)
+                     $http.post("/register?firstName=" + firstName + "&lastName=" + lastName + "&email=" + email2 + "&password=" + password2)
+//                     ", $scope.email, $scope.firstName, $scope.lastName, $scope.password)
                         .then(
                            function success(response) {
                                console.log(response.data);

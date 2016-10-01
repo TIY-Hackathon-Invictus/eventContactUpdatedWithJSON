@@ -12,7 +12,7 @@ public class User {
 
     @Id
     @GeneratedValue
-    int id;
+    int userid;
 
     @Column(nullable = false)
     String firstName;
@@ -30,7 +30,7 @@ public class User {
     boolean isAdmin;
 
 
-    public User(String firstName, String lastName, String password, String email) {
+    public User(String firstName, String lastName, String email, String password) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -57,12 +57,12 @@ public class User {
         isAdmin = admin;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userid) {
+        this.userid = userid;
     }
 
     public String getFirstName() {
