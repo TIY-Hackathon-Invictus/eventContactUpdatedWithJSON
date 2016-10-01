@@ -33,7 +33,7 @@ public class NewController {
 //    }
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpSession session) {
-
+        System.out.println("hanging out in home");
         return "home";
     }
 }

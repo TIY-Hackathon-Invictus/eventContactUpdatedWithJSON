@@ -33,15 +33,19 @@ public class JSONController {
 
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public User login(String email, String password) throws Exception {
-        Database myDB = new Database(users, events);
-        System.out.println(users);
-        System.out.println(email);
-        User myUser = users.findFirstByEmail(email);
-        System.out.println("works2");
-        System.out.println(email + " " + password);
+//    public User login(@RequestBody User myUser) throws Exception {
+//        System.out.println(myUser);
+//        users.save(myUser);
+//        return myUser;
 
-//        myDB.login(myUser);
+
+    public User login(@RequestBody LoginRequest lr) throws Exception {
+        User myUser = users.findFirstByEmail(lr.getEmail());
+
+
+        System.out.println("This is the email and password "+myUser.email + " " + myUser.password);
+
+
 
         if (myUser == null) {
             throw new Exception("No user exists; create a new user!");
@@ -49,10 +53,6 @@ public class JSONController {
 //        else if (!password.equals(user.getPassword())) {
 //
 //        }
-
-//        session.setAttribute("user", user);
-
-
         return myUser;
     }
 
