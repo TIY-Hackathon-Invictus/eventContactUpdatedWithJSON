@@ -57,14 +57,14 @@ public class JSONController {
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public User register(String firstName, String lastName, String email, String password) throws Exception {
-        User user = users.findFirstByEmail(email);
-        if (user == null) {
-            user = new User(firstName, lastName, email, password);
-            users.save(user);
+    public User register(@RequestBody User user) throws Exception {
+        User compareUser = users.findFirstByEmail(user.getEmail());
+        if (user.getEmail().equals(compareUser.getEmail())) {
+            throw new Exception("User already exists!!!!!");
         }
-        else if (!password.equals(user.getPassword())) {
-            throw new Exception("Incorrect password");
+        else  {
+
+            users.save(user);
         }
         return user;
     }
