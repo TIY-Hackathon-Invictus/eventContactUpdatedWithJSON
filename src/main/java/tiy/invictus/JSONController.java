@@ -114,21 +114,23 @@ public class JSONController {
         return getAllEvents();
     }
     @RequestMapping(path = "/contacts", method = RequestMethod.POST)
-    public ArrayList<User> contacts(int userID) {
-        ArrayList<User> userList = new ArrayList<User>();
-        Iterable<User> allUsers = users.findAll();
-        for (User user : allUsers) {
-            userList.add(user);
+    public ArrayList<ContactRequest> contacts(@RequestBody ReqContacts rc) {
+        ArrayList<ContactRequest> requestListThatAreTrue = new ArrayList<ContactRequest>();
+        Iterable<ContactRequest> allRequests = contacts.findAll();
+        User myUser = users.findOne(Integer.valueOf(rc.getContactID()));
+
+
+
+        for (ContactRequest cr : allRequests) {
+            if (cr.isFriend)
+            {
+                requestListThatAreTrue.add(cr);
+            }
         }
-        try{
-            //   System.out.println("Catching a nap");
-            //   Thread.sleep(3000);
-            //   System.out.println("Power nap");
-        }catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        return userList;
+
+
+
+        return requestListThatAreTrue;
     }
 
     @RequestMapping(path = "/contactInfo", method = RequestMethod.POST)

@@ -14,19 +14,24 @@ public class ContactRequest {
     @GeneratedValue
     int id;
 
-    @Column (nullable = false)
-    int contactorid;
+    @ManyToOne
+    User contactor;
+
+    @ManyToOne
+    User contactee;
 
     @Column (nullable = false)
-    int contacteeid;
+    boolean isFriend = false;
+
 
     public ContactRequest() {
     }
 
-    public ContactRequest(int id, int contactorid, int contacteeid) {
+    public ContactRequest(int id, User contactor, User contactee, boolean isFriend) {
         this.id = id;
-        this.contactorid = contactorid;
-        this.contacteeid = contacteeid;
+        this.contactor = contactor;
+        this.contactee = contactee;
+        this.isFriend = isFriend;
     }
 
     public int getId() {
@@ -37,19 +42,27 @@ public class ContactRequest {
         this.id = id;
     }
 
-    public int getContactor() {
-        return contactorid;
+    public User getContactor() {
+        return contactor;
     }
 
-    public void setContactor(int contactorid) {
-        this.contactorid = contactorid;
+    public void setContactor(User contactor) {
+        this.contactor = contactor;
     }
 
-    public int getContactee() {
-        return contacteeid;
+    public User getContactee() {
+        return contactee;
     }
 
-    public void setContactee(int contacteeid) {
-        this.contacteeid = contacteeid;
+    public void setContactee(User contactee) {
+        this.contactee = contactee;
+    }
+
+    public boolean isFriend() {
+        return isFriend;
+    }
+
+    public void setFriend(boolean friend) {
+        isFriend = friend;
     }
 }
