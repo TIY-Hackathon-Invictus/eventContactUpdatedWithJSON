@@ -1,11 +1,10 @@
 angular.module('TIYAngularApp', [])
    .controller('SampleController', function($scope, $http) {
-
+    $scope.user = {};
     console.log("Initial start");
         $scope.login = function(email, password) {
             console.log("About to go get me some data!");
-            $http.post("/login?email=" + email + "&password=" + password)
-//            , $scope.email, $scope.password)
+            $http.post("/login", $scope.user)
                 .then(
                     function successCallback(response) {
                         console.log(response.data);

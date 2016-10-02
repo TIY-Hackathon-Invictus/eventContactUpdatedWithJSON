@@ -43,8 +43,8 @@ public class JSONController {
             throw new Exception("No user exists; create a new user!");
         }
 //      else if (!lr.getPassword().equals(user.getPassword())) {
-//          throw new Exception("Password is incorrect");
-//      }
+//             throw new Exception("Password is incorrect");
+//       }
 
         return myUser;
     }
