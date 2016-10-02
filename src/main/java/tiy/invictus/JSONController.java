@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Brice on 9/29/16.
@@ -30,47 +31,36 @@ public class JSONController {
 
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-//    public User login(@RequestBody User myUser) throws Exception {
-//        System.out.println(myUser);
-//        users.save(myUser);
-//        return myUser;
+    public Response login(@RequestBody ReqLoginRequest loginRequest) throws Exception {
+        Response myUser = users.findFirstByEmail(loginRequest.getEmail());
+        User userAsUser = (User) myUser;
+        System.out.println("This is the email and password " + userAsUser.email + " " + userAsUser.password);
 
-
-    public User login(@RequestBody ReqLoginRequest lr) throws Exception {
-        User myUser = users.findFirstByEmail(lr.getEmail());
-        System.out.println("This is the email and password "+myUser.email + " " + myUser.password);
-        if (myUser == null) {
-            throw new Exception("No user exists; create a new user!");
+        if (userAsUser == null) {
+            return new ResponseError("User does not exist.");
         }
-//      else if (!lr.getPassword().equals(user.getPassword())) {
-//             throw new Exception("Password is incorrect");
-//       }
 
-        return myUser;
+        if (!loginRequest.getPassword().equals(userAsUser.getPassword())) {
+            return new ResponseError("Incorrect Username/Password.");
+        }
+
+        return userAsUser;
     }
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public User register(@RequestBody User user) throws Exception {
+    public Response register(@RequestBody User user) throws Exception {
         User compareUser = users.findFirstByEmail(user.getEmail());
-        if (user.getEmail().equals(compareUser.getEmail())) {
-            throw new Exception("User already exists!!!!!");
+        SecureUser secureUser = new SecureUser();
+        if (compareUser != null) {
+            return new ResponseError("User already exists.");
         }
         else  {
-
             users.save(user);
+            secureUser = new SecureUser(compareUser.getUserId(), compareUser.getFirstName(), compareUser.getLastName(), compareUser.getEmail(), compareUser.isAdmin());
         }
-        return user;
+        return secureUser;
     }
-//    @RequestMapping(path = "/home", method = RequestMethod.POST)
-//    public ArrayList<Event> home(int userID) {
-//        ArrayList<Event> eventList = new ArrayList<Event>();
-//        Iterable<Event> allEvents = events.findAll();
-//        for (Event event : allEvents) {
-//            eventList.add(event);
-//        }
-//
-//        return eventList;
-//    }
+
 
 
     @RequestMapping(path = "/events", method = RequestMethod.POST)
@@ -80,61 +70,51 @@ public class JSONController {
         for (Event event : allEvents) {
             eventList.add(event);
         }
-        try{
-            //   System.out.println("Catching a nap");
-            //   Thread.sleep(3000);
-            //   System.out.println("Power nap");
-        }catch(Exception e)
-        {
-            e.printStackTrace();
-        }
         return eventList;
     }
 
+
+
     @RequestMapping(path = "/eventInfo", method = RequestMethod.POST)
-    public Event eventInfo(@RequestBody ReqEventInfo ei) {
-        Event event = events.findOne(ei.getEvent_ID());
+    public Event eventInfo(@RequestBody ReqEventInfo eventInfoRequest) {
+        Event event = events.findOne(eventInfoRequest.getEventId());
         return event;
     }
 
-    @RequestMapping(path = "/addEvent", method = RequestMethod.POST)
-    public ArrayList<Event> addEvent(@RequestBody ReqAddEvent rae) throws Exception {
-        User newUser = users.findOne(rae.getMyUserID());
-        if (newUser == null) {
-            throw new Exception("Unable to add event without an active user in the session");
-        }
-        Event newEvent = new Event();
-        newEvent.setAdminUserID(newUser);
-        events.save(newEvent);
 
+
+    @RequestMapping(path = "/addEvent", method = RequestMethod.POST)
+    public ArrayList<Event> addEvent(@RequestBody ReqAddEvent addEventRequest) throws Exception {
+        User newUser = users.findOne(addEventRequest.getUserId());
+        Event newEvent = addEventRequest.getEvent();
+        newEvent.setAdminUser(newUser);
+        events.save(newEvent);
         return getAllEvents();
     }
-    @RequestMapping(path = "/contacts", method = RequestMethod.POST)
-    public ArrayList<ContactRequest> contacts(@RequestBody ReqContacts rc) {
-        ArrayList<ContactRequest> requestListThatAreTrue = new ArrayList<ContactRequest>();
-        Iterable<ContactRequest> allRequests = contacts.findAll();
-        User myUser = users.findOne(Integer.valueOf(rc.getContactID()));
 
 
 
-        for (ContactRequest cr : allRequests) {
-            if (cr.isFriend)
-            {
-                requestListThatAreTrue.add(cr);
-            }
-        }
-
-
-
-        return requestListThatAreTrue;
-    }
+//    @RequestMapping(path = "/contacts", method = RequestMethod.POST)
+//    public ArrayList<ContactRequest> contacts(@RequestBody ReqContacts rc) {
+//        ArrayList<ContactRequest> requestListThatAreTrue = new ArrayList<ContactRequest>();
+//        Iterable<ContactRequest> allRequests = contacts.findAll();
+//        User myUser = users.findOne(Integer.valueOf(rc.getContactID()));
+//        for (ContactRequest cr : allRequests) {
+//            if (cr.isFriend) {
+//                requestListThatAreTrue.add(cr);
+//            }
+//        }
+//        return requestListThatAreTrue;
+//    }
 
     @RequestMapping(path = "/contactInfo", method = RequestMethod.POST)
-    public User contactInfo(int userID) {
-        User user = users.findOne(userID);
-
-        return user;
+    public SecureUser contactInfo(int userID) {
+        User myUser = users.findOne(userID);
+        SecureUser mySecureUser = new SecureUser(myUser.getUserId(), myUser.getFirstName(), myUser.getLastName(), myUser.getEmail(), myUser.isAdmin());
+        return mySecureUser;
     }
+
+
 
     @RequestMapping(path = "/requests", method = RequestMethod.POST)
     public ArrayList<ContactRequest> requests() {
@@ -153,4 +133,17 @@ public class JSONController {
         }
         return contactRequestsList;
     }
+
+    @RequestMapping(path = "/checkedIn", method = RequestMethod.POST)
+    public ArrayList<CheckedIn> checkedIn(@RequestBody CheckedIn checkedIn) {
+
+        System.out.println("Checking into event ID "+checkedIn.getEventid()+" with user ID "+ checkedIn.getUserid());
+        Event event = events.findOne(checkedIn.getEventid());
+        event.title = "Checked In: "+event.title;
+        events.save(event);
+        checkedInRepos.save(checkedIn);
+
+        return getAllEvents();
+
+
 }

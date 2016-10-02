@@ -1,15 +1,12 @@
 package tiy.invictus;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 
 /**
  * Created by Brice on 9/29/16.
  */
 
-@Entity
-@Table(name = "events")
-public class Event {
+public class ReqEvent {
 
     @Id
     @GeneratedValue
@@ -25,7 +22,7 @@ public class Event {
     String description;
 
     @ManyToOne
-    User adminUser;
+    int adminUser;
 
     @Column (nullable = false)
     String date;
@@ -33,7 +30,8 @@ public class Event {
     @Column (nullable = false)
     String time;
 
-    public Event(String title, String address, String description, User adminUserID, String date, String time) {
+    public ReqEvent(String title, String address, String description, int adminUserID, String date, String time) {
+
         this.title = title;
         this.address = address;
         this.description = description;
@@ -42,7 +40,7 @@ public class Event {
         this.time = time;
     }
 
-    public int getEventId() {
+    public int getEventid() {
         return eventId;
     }
 
@@ -74,11 +72,11 @@ public class Event {
         this.description = description;
     }
 
-    public User getAdminUser() {
+    public int getAdminUser() {
         return adminUser;
     }
 
-    public void setAdminUser(User adminUser) {
+    public void setAdminUser(int adminUser) {
         this.adminUser = adminUser;
     }
 

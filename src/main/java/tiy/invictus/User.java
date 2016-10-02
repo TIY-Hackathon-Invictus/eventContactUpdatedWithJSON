@@ -8,11 +8,11 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Response{
 
     @Id
     @GeneratedValue
-    int userid;
+    int userId;
 
     @Column(nullable = false)
     String firstName;
@@ -58,11 +58,11 @@ public class User {
     }
 
     public int getUserId() {
-        return userid;
+        return userId;
     }
 
-    public void setUserId(int userid) {
-        this.userid = userid;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {

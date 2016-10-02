@@ -5,12 +5,9 @@
 <script src="../static/js/tiy-ng-controller.js"></script>
 <body ng-controller="SampleController">
 
-{{! changing the mustache delimiter so it doesn't conflict with  }}
-{{! the default angularjs delimeters - https://mustache.github.io/mustache.5.html for more info  }}
-{{=<% %>=}}
-
-
-
+<!--{{! changing the mustache delimiter so it doesn't conflict with  }}-->
+<!--{{! the default angularjs delimeters - https://mustache.github.io/mustache.5.html for more info  }}-->
+<!--{{=<% %>=}}-->
 
 
 <div style="position: relative; float: left; width: 100%; padding: 20px;">
@@ -20,7 +17,9 @@
     <span>Password: <input type="text" ng-model="user.password"/></span>
     </span>
     <span>
-        <span>  <input type="button" ng-click="login(email, password)" value="Login"/></span>
+
+        <span>  <input type="button" ng-click="login()" value="login"/></span>
+
 
   <div style="position: relative; float: left; width: 100%; padding: 20px;">
     <h1>Enter new register information</h1>
@@ -33,41 +32,25 @@
     <span>
         <span>  <input type="button" ng-click="register(firstName, lastName, email2, password2)" value="Register"/></span>
 
+
+
+
 <div style="position: relative; float: left; width: 100%; padding: 20px;">
     <h1>Show all events</h1>
-
-
     <ul>
         <li ng-repeat="event in events">
-            {{event.title}}- {{event.description}}
-            <!--<button ng-click="deleteGame(game.id)">delete</button>-->
-            <!--<button ng-click="toggleGame(game.id)">toggle</button>-->
+            {{event.title}}- {{event.description}}2
+            <button ng-click="eventInfo(event.id)">info</button>
+            <button ng-click="checkIn(event.id, user.id)">CheckIn</button>
         </li>
     </ul>
-</div>
-
     <span>
         <span>  <input type="button" ng-click="allEvents()" value="show all events"/></span>
 
+</div>
 
 
 
-
-
-        $scope.allEvents = function() {
-                      console.log("About to add the show events "); // + JSON.stringify($scope.newGame));
-
-                         $http.post("/events")
-                           .then(
-                              function successCallback(response) {
-                                  console.log(response.data);
-                                  console.log("Adding data to scope");
-                                  $scope.events = response.data;
-                              },
-                              function errorCallback(response) {
-                                  console.log("Unable to get data");
-                              });
-                 };
 
 
 

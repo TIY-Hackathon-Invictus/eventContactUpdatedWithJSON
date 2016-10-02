@@ -22,15 +22,18 @@ public class NewController {
     @Autowired
     UserRepository users;
 
-//    @PostConstruct
-//    public void init() {
-//        if (users.count() == 0) {
-//            User user = new User();
-//            user.email = "Zach@hunter.com";
-//            user.password = "hunter2";
-//            users.save(user);
-//        }
-//    }
+    @PostConstruct
+    public void init() {
+        if (users.count() == 0) {
+            User user = new User();
+            user.email = "brice@blanch.com";
+            user.password = "hi";
+            user.setAdmin(true);
+            user.setFirstName("brice");
+            user.setLastName("blanch");
+            users.save(user);
+        }
+    }
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpSession session) {
         System.out.println("hanging out in home");

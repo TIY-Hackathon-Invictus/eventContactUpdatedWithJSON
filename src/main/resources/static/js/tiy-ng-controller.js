@@ -1,8 +1,11 @@
 angular.module('TIYAngularApp', [])
    .controller('SampleController', function($scope, $http) {
+
     $scope.user = {};
+    $scope.events ={};
     console.log("Initial start");
-        $scope.login = function(email, password) {
+            $scope.login = function() {
+
             console.log("About to go get me some data!");
             $http.post("/login", $scope.user)
                 .then(
@@ -24,7 +27,7 @@ angular.module('TIYAngularApp', [])
                         .then(
                            function success(response) {
                                console.log(response.data);
-                               console.log("Todo toggled");
+                               console.log("Register works");
 
                                $scope.users={};
 
@@ -36,8 +39,9 @@ angular.module('TIYAngularApp', [])
                            });
          };
 
+
          $scope.allEvents = function() {
-                      console.log("About to add the show events "); // + JSON.stringify($scope.newGame));
+                      console.log("About to show events "); // + JSON.stringify($scope.newGame));
 
                          $http.post("/events")
                            .then(
@@ -50,6 +54,43 @@ angular.module('TIYAngularApp', [])
                                   console.log("Unable to get data");
                               });
                  };
+
+         $scope.makeArray = function(arraySize){
+         var returnArray = [];
+         for(var i = 0; i<arraySize; i++){
+            returnArray.push(i);
+         }
+            return returnArray;
+         };
+
+          $scope.eventInfo = function() {
+                               console.log("About to show events "); // + JSON.stringify($scope.newGame));
+
+                                  $http.post("/eventInfo")
+                                    .then(
+                                       function successCallback(response) {
+                                           console.log(response.data);
+                                           console.log("Adding data to scope");
+                                           $scope.eventInfo = response.data;
+                                       },
+                                       function errorCallback(response) {
+                                           console.log("Unable to get data");
+                                       });
+                          };
+          $scope.checkIn = function(event.id, user.id) {
+                                         console.log("About to show events "); // + JSON.stringify($scope.newGame));
+
+                                            $http.post("/checkedIn")
+                                              .then(
+                                                 function successCallback(response) {
+                                                     console.log(response.data);
+                                                     console.log("Adding data to scope");
+                                                     $scope.eventInfo = response.data;
+                                                 },
+                                                 function errorCallback(response) {
+                                                     console.log("Unable to get data");
+                                                 });
+                                    };
 
     });
 
