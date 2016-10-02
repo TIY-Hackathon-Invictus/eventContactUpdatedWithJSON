@@ -5,17 +5,17 @@ package tiy.invictus;
  */
 public class ReqEventInfo {
 
-    public int event_ID;
+    public int eventId;
 
-    public ReqEventInfo(int event_ID) {
-        this.event_ID = event_ID;
+    public ReqEventInfo(int eventId) {
+        this.eventId = eventId;
     }
 
-    public int getEvent_ID() {
-        return event_ID;
+    public int getEventId() {
+        return eventId;
     }
 
-    public void setEvent_ID(int event_ID) {
-        this.event_ID = event_ID;
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
     }
 }

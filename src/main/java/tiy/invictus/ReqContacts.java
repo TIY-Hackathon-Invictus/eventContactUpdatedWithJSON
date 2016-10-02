@@ -4,17 +4,18 @@ package tiy.invictus;
  * Created by SC on 10/1/2016.
  */
 public class ReqContacts {
-    public int contactID;
+
+    public int contactId;
 
     public ReqContacts(int contactID) {
-        this.contactID = contactID;
+        this.contactId = contactId;
     }
 
-    public int getContactID() {
-        return contactID;
+    public int getContactId() {
+        return contactId;
     }
 
-    public void setContactID(int contactID) {
-        this.contactID = contactID;
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
     }
 }

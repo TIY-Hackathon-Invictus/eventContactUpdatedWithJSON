@@ -5,23 +5,20 @@
 <script src="../static/js/tiy-ng-controller.js"></script>
 <body ng-controller="SampleController">
 
-{{! changing the mustache delimiter so it doesn't conflict with  }}
-{{! the default angularjs delimeters - https://mustache.github.io/mustache.5.html for more info  }}
-{{=<% %>=}}
-
-
-
+<!--{{! changing the mustache delimiter so it doesn't conflict with  }}-->
+<!--{{! the default angularjs delimeters - https://mustache.github.io/mustache.5.html for more info  }}-->
+<!--{{=<% %>=}}-->
 
 
 <div style="position: relative; float: left; width: 100%; padding: 20px;">
     <h1>Enter new login information</h1>
-    <span>Email: <input type="text" ng-model="email"/></span>
+    <span>Email: <input type="text" ng-model="user.email"/></span>
     <span>
-    <span>Password: <input type="text" ng-model="password"/></span>
+    <span>Password: <input type="text" ng-model="user.password"/></span>
     </span>
 
     <span>
-        <span>  <input type="button" ng-click="login(email, password)" value="login"/></span>
+        <span>  <input type="button" ng-click="login()" value="login"/></span>
 
   <div style="position: relative; float: left; width: 100%; padding: 20px;">
     <h1>Enter new register information</h1>

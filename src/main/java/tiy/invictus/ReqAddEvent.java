@@ -5,27 +5,31 @@ package tiy.invictus;
  */
 public class ReqAddEvent {
 
-    public int myUserID;
-    public Event myEvent;
+    public int userId;
+    public Event event;
 
-    public ReqAddEvent(int myUserID, Event myEvent) {
-        this.myUserID = myUserID;
-        this.myEvent = myEvent;
+    public ReqAddEvent() {
     }
 
-    public int getMyUserID() {
-        return myUserID;
+    public ReqAddEvent(int userId, Event event) {
+        this.userId = userId;
+        this.event = event;
     }
 
-    public void setMyUserID(int myUserID) {
-        this.myUserID = myUserID;
+    public int getUserId() {
+        return userId;
     }
 
-    public Event getMyEventID() {
-        return myEvent;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public void setMyEventID(int myEventID) {
-        this.myEvent = myEvent;
+    public Event getEvent() {
+        return event;
     }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
 }
