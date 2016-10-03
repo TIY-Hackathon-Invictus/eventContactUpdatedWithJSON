@@ -39,7 +39,7 @@
     <h1>Show all events</h1>
     <ul>
         <li ng-repeat="event in events">
-            {{event.title}}- {{event.description}}2
+            {{event.title}}- {{event.description}}
             <button ng-click="eventInfo(event.id)">info</button>
             <button ng-click="checkIn(event.id, user.id)">CheckIn</button>
         </li>

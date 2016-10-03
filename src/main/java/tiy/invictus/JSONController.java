@@ -32,6 +32,7 @@ public class JSONController {
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public Response login(@RequestBody ReqLoginRequest loginRequest) throws Exception {
+        System.out.println("login sysout");
         Response myUser = users.findFirstByEmail(loginRequest.getEmail());
         User userAsUser = (User) myUser;
         System.out.println("This is the email and password " + userAsUser.email + " " + userAsUser.password);
@@ -135,15 +136,17 @@ public class JSONController {
     }
 
     @RequestMapping(path = "/checkedIn", method = RequestMethod.POST)
-    public ArrayList<CheckedIn> checkedIn(@RequestBody CheckedIn checkedIn) {
+    public ArrayList<Event> checkedIn(@RequestBody CheckedIn checkedIn) {
 
-        System.out.println("Checking into event ID "+checkedIn.getEventid()+" with user ID "+ checkedIn.getUserid());
-        Event event = events.findOne(checkedIn.getEventid());
-        event.title = "Checked In: "+event.title;
-        events.save(event);
+        System.out.println("Checking into event ID " + checkedIn.getEventid() + " with user ID " + checkedIn.getUserid());
         checkedInRepos.save(checkedIn);
+
+//        if(checkedIn.getUserid() ==users.findOne())
+//        {
+//
+//        }
 
         return getAllEvents();
 
-
+    }
 }
